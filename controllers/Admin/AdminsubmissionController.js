@@ -4,6 +4,7 @@ const Assessment = require("../../models/Assessment");
 const Submission = require("../../models/Submission");
 const formidable = require("formidable");
 const fs = require("fs");
+const Admin = require("../../models/Admin");
 
 
 //file valid check
@@ -16,6 +17,8 @@ const isFileValid = (file) => {
   return true;
 };
 /*------------- assessment submission ------------ */
+
+//add submission file in the assessment using formidable
 const addSubmission = async (req, res) => {
 
   const assessmentId = req.params.id;
@@ -74,8 +77,8 @@ const addSubmission = async (req, res) => {
       
         
           const submission = await newSubmission.save();
-          await Student.updateOne(
-            { _id: req.studentInfo.studentId },
+          await Admin.updateOne(
+            { _id: req.adminInfo.adminId },
             {
               $push: {
                 submission: submission._id,

@@ -4,6 +4,8 @@ const Grade = require("../../models/Grade");
 
 
 /*--------------manage grade------------------*/
+
+//add grade in the submission
 const addGrade = async(req,res)=> {
     const submissionId = req.params.id
     let newGrade = new Grade({
@@ -22,7 +24,7 @@ const addGrade = async(req,res)=> {
     }
   }
 
-  
+//update grade
 const updateGrade = async (req, res) => {
     const submissionId = req.params.subId
     const gradeId = req.params.gId
@@ -40,7 +42,8 @@ const updateGrade = async (req, res) => {
       res.status(StatusCodes.FORBIDDEN).json({ msg: "error in update" });
     }
   };
-  
+
+//delete grade
   const deleteGrade = async (req, res) => {
     const submissionId = req.params.subId
     const gradeId = req.params.gId

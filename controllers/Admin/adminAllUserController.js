@@ -3,6 +3,8 @@ const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../../errors");
 
 /*--------------- manage admin -------------- */
+
+//create user as admin
 const createAdmin = async (req, res) => {
   const { name, email, password } = req.body;
   Admin.findOne({ email }).exec((err, admin) => {
@@ -14,7 +16,7 @@ const createAdmin = async (req, res) => {
   });
 
   let newAdmin = new Admin({ name, email, password });
-
+  //save in database
   newAdmin.save((err, success) => {
     if (err) {
       console.log("SIGNUP ERROR", err);
@@ -28,16 +30,16 @@ const createAdmin = async (req, res) => {
   });
 };
 
+//update admin
 const updateAdmin = async (req, res) => {
-  console.log(req);
   const { email, name } = req.body;
   if (!email || !name) {
     throw new CustomError.BadRequestError("Please provide all values");
   }
   try {
+    //using findOne first find existing admin then update admin
     const admin = await Admin.findOne({ _id: req.admin.adminId });
-    console.log(admin);
-
+   
     admin.email = email;
     admin.name = name;
 
@@ -48,6 +50,7 @@ const updateAdmin = async (req, res) => {
   }
 };
 
+//delete admin
 const deleteAdmin = async (req, res) => {
   const admin = await Admin.findByIdAndDelete({ _id: req.admin.adminId });
   if (!admin) {
@@ -56,7 +59,10 @@ const deleteAdmin = async (req, res) => {
   res.status(StatusCodes.OK).json({ user: null, status: "successfull" });
 };
 
+
 /* --------------Manage mentor -------------*/
+
+//create user as mentor
 const createMentor = async (req, res) => {
   const { name, email, password } = req.body;
   Mentor.findOne({ email }).exec((err, mentor) => {
@@ -82,6 +88,7 @@ const createMentor = async (req, res) => {
   });
 };
 
+//update mentor by admin
 const updateMentor = async (req, res) => {
   const { email, name } = req.body;
   if (!email || !name) {
@@ -96,6 +103,7 @@ const updateMentor = async (req, res) => {
   res.status(StatusCodes.OK).json({ mentor });
 };
 
+//delete mentor by admin
 const deleteMentor = async (req, res) => {
   const mentor = await Mentor.findByIdAndDelete({ _id: req.mentor.mentorId });
   if (!mentor) {
@@ -108,6 +116,7 @@ const deleteMentor = async (req, res) => {
 
 /*--------------manage student---------------------*/
 
+//create student by admin
 const createStudent = async (req, res) => {
   const { name, email, password } = req.body;
   Student.findOne({ email }).exec((err, student) => {
@@ -133,7 +142,7 @@ const createStudent = async (req, res) => {
   });
 };
 
-
+//update student by admin
 const updateStudent = async (req, res) => {
   const { email, name } = req.body;
   if (!email || !name) {
@@ -147,6 +156,7 @@ const updateStudent = async (req, res) => {
   res.status(StatusCodes.OK).json({ student });
 };
 
+//delete student by admin
 const deleteStudent = async (req, res)=> {
   const student = await Student.findByIdAndDelete({_id: req.student.studentId})
   if(!student){
