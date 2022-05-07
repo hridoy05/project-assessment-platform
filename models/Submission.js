@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const SubmissionSchema = mongoose.Schema({
-  Url: {
+  pdf: {
     type: String,
-    required: true,
+    trim: true
   },
   DOS: {
     type: Date,
