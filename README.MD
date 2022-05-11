@@ -1,3 +1,35 @@
+####Create a backend for a project assessment platform. Please note that we prefer Node.js. Even if you use other languages to submit, please be informed that you have to use Node.js on the actual job.
+
+Users must be able to create an account and log in.
+Implement 3 roles with different permission levels
+    * Student: Can submit an assessment to a particular mentor.
+    * Mentor: Can add and grade an assessment.
+    * Admin: Can add/edit/delete, assessment, users, submissions and grades.
+
+Assessment should include:
+    * Title
+    * Description
+    * Mentor
+    * Created At
+    * Deadline
+
+Assessment submission can include:
+    * File or Links
+    * Date of submission
+    * Grades
+
+Grade should include:
+    * Mark for this submission
+    * Mentor's remarks for this submission
+
+When a assessment is selected, a detailed view should be presented showing:
+    * Mentor/Admin can see all submissions
+    * Student can see only their submission
+
+
+
+
+
 #### Front End App
 
 [Auth Workflow](https://react-node-user-workflow-front-end.netlify.app/)
