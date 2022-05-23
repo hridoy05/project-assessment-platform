@@ -1,7 +1,6 @@
 const Student = require("../../models/Student");
 const Submission = require("../../models/Submission");
 const { StatusCodes } = require("http-status-codes");
-const CustomError = require("../../errors");
 const Assessment = require("../../models/Assessment");
 const formidable = require("formidable");
 const fs = require("fs");
@@ -101,9 +100,12 @@ const addSubmission = async (req, res) => {
       }
     }
   });
-
-  
+ 
 };
+
+
+
+//get submission
 const getSubmissions = async (req, res) => {
   const assessmentId = req.params.id;
 

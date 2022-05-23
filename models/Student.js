@@ -29,7 +29,7 @@ const StudentSchema = new mongoose.Schema({
   refreshToken: String,
   userType:{
     type:String,
-    default: 'Admin'
+    default: 'Student'
 },
 submission: [{
   type: mongoose.Schema.ObjectId,

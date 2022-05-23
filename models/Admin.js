@@ -33,13 +33,13 @@ const AdminSchema = new mongoose.Schema({
   },
   submission: [
     {
-      type: mongoose.Schema.ObjectId,
+      type: mongoose.Types.ObjectId,
       ref: "Submission",
     },
   ],
   assessment: [{
-    type: mongoose.Schema.ObjectId,
-    ref: "Submission",
+    type: mongoose.Types.ObjectId,
+    ref: "Assessment",
   }]
 });
 

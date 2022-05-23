@@ -8,7 +8,7 @@ const {
   login,
   logout,
   handleRefreshToken
-} = require('../../controllers/Admin/AdminAuthController');
+} = require('../../controllers/Mentor/MentorAuthController');
 
 router.post('/register', register);
 router.post('/login', login);

@@ -26,7 +26,7 @@ const register = async (req, res) => {
     });
 
     res.status(StatusCodes.CREATED).json({
-      admin: { name: mentor.name, email: mentor.email, role: mentor.userType },
+      mentor: { name: mentor.name, email: mentor.email, role: mentor.userType },
       msg: "Success! new mentor created",
     });
   } catch (error) {
@@ -74,12 +74,12 @@ const login = async (req, res) => {
   );
 
   const refreshToken = jwt.sign(
-    { adminname: mentor.name, adminId: mentor._id, },
+    { mentorname: mentor.name, mentorId: mentor._id, roles: mentor.userType },
     process.env.REFRESH_TOKEN_SECRET,
     { expiresIn: "1d" }
   );
 
-  admin.refreshToken = refreshToken;
+  mentor.refreshToken = refreshToken;
   const result = await mentor.save();
 
 
@@ -113,7 +113,7 @@ const handleRefreshToken = async (req, res) => {
           const accessToken = jwt.sign(
               {
                 mentorInfo: {
-                  mentorId: decoded._id,
+                  mentorId: decoded.mentorId,
                   mentorname: decoded.mentorname,
                   roles: decoded.roles,
                 }
@@ -121,7 +121,7 @@ const handleRefreshToken = async (req, res) => {
               process.env.ACCESS_TOKEN_SECRET,
               { expiresIn: '30min' }
           );
-          res.json({ roles, accessToken })
+          res.json({ accessToken })
       }
   );
 }

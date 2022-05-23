@@ -74,12 +74,12 @@ const login = async (req, res) => {
   );
 
   const refreshToken = jwt.sign(
-    { adminname: student.name, adminId: student._id, },
+    { studentname: student.name, studentId: student._id, roles: student.userType },
     process.env.REFRESH_TOKEN_SECRET,
     { expiresIn: "1d" }
   );
 
-  admin.refreshToken = refreshToken;
+  student.refreshToken = refreshToken;
   const result = await student.save();
 
 
@@ -113,13 +113,13 @@ const handleRefreshToken = async (req, res) => {
           const accessToken = jwt.sign(
               {
                 studentInfo: {
-                  studentId: decoded._id,
+                  studentId: decoded.studentId,
                   studentname: decoded.studentname,
                   roles: decoded.roles,
                 }
               },
               process.env.ACCESS_TOKEN_SECRET,
-              { expiresIn: '30min' }
+              { expiresIn: '50min' }
           );
           res.json({accessToken })
       }

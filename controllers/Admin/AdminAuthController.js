@@ -70,11 +70,11 @@ const login = async (req, res) => {
       },
     },
     process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: "30min" }
+    { expiresIn: "50min" }
   );
 
   const refreshToken = jwt.sign(
-    { adminname: admin.name, adminId: admin._id, },
+    { adminname: admin.name, adminId: admin._id,roles: admin.userType },
     process.env.REFRESH_TOKEN_SECRET,
     { expiresIn: "1d" }
   );
@@ -96,12 +96,11 @@ const login = async (req, res) => {
 
 const handleRefreshToken = async (req, res) => {
   const cookies = req.cookies;
-  console.log(cookies);
   if (!cookies?.jwt) return res.sendStatus(401);
   const refreshToken = cookies.jwt;
 
   const foundAdmin = await Admin.findOne({ refreshToken }).exec();
-  console.log(foundadmin);
+  console.log(foundAdmin);
   if (!foundAdmin) return res.sendStatus(403); //Forbidden 
   // evaluate jwt 
   jwt.verify(
@@ -109,19 +108,19 @@ const handleRefreshToken = async (req, res) => {
       process.env.REFRESH_TOKEN_SECRET,
       (err, decoded) => {
         console.log("foundadmin",err, decoded);
-          if (err || foundadmin.name !== decoded.adminname) return res.sendStatus(403);
+          if (err || foundAdmin.name !== decoded.adminname) return res.sendStatus(403);
           const accessToken = jwt.sign(
               {
                   "adminInfo": {
-                      "adminId": decoded._id,
+                      "adminId": decoded.adminId,
                       "adminname": decoded.adminname,
                       "roles": decoded.roles
                   }
               },
               process.env.ACCESS_TOKEN_SECRET,
-              { expiresIn: '30min' }
+              { expiresIn: '50min' }
           );
-          res.json({ roles, accessToken })
+          res.json({accessToken })
       }
   );
 }

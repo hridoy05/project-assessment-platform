@@ -16,7 +16,7 @@ const AssessmentSchema = mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: "Mentor",
   },
-  mentor: {
+  admin: {
     type: mongoose.Schema.ObjectId,
     ref: "Admin",
   },
